@@ -1,0 +1,85 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <meta charset="utf-8"> 
+        <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
+
+        <title>Pari Gabriel's HCDE 439 Physical Computing Page!</title> 
+
+        <link href="style.css" media="screen" rel="stylesheet" type="text/css" />
+
+    </head> 
+    <body> 
+
+        <div class="header">
+            <h1>Pari Gabriel's Assignment 3!</h1>
+            <p>
+            Here is all the documentation for assignment 3.
+            </p>
+            <p>
+            <img src="a3-circuit.JPG" width=400></a>
+            </br>
+        	Circuit
+            </p>
+            <p>
+            <img src="a3-schematic.png" width=400></a>
+            </br>
+        	Schematic
+            </p>
+             <p>
+            <img src="a3-calculation.JPG" width=400></a>
+            </br>
+          The minimum acceptable resistance calculated for the thermistor to not short out.
+            </br>
+            </p>  
+            <p>
+            <img src="a3-functionality.gif" width=400></a>
+            </br>
+        	The circuit in action.
+            </br>
+            </p>
+           <p>
+            <pre><code>
+const int analogInPin = A0;  // Analog input pin that the potentiometer is attached to
+
+int sensorValue = 0;        // value read from the heat sensor
+int outputValue = 100;       // value output to the PWM (analog out)
+int analogOutPin = 10;      // Analog output pin that the blue LED is attached to
+
+void setup() {
+  // initialize serial communications at 9600 bps:
+  Serial.begin(9600);
+}
+
+void loop() {
+  // read the analog in value:
+  sensorValue = analogRead(analogInPin);   
+  // change the analog out value:
+  analogWrite(analogOutPin, outputValue);
+
+  // if the sensor is heated, change the out pin to power the red LED (pin 11)
+  if (sensorValue < 430) {
+    analogOutPin = 11;
+  }
+  
+  // set brightness of LED
+  outputValue = 255;
+  // print the results to the Serial Monitor:
+  Serial.print("sensor = ");
+  Serial.print(sensorValue);
+  Serial.print("\t output = ");
+  Serial.println(outputValue);
+
+  // wait 2 milliseconds before the next loop for the analog-to-digital
+  // converter to settle after the last reading:
+  delay(2);
+}
+            </pre></code>
+            <p>The code snippet.</p>
+            <br>
+            </p>
+
+        </div>
+        
+    </body>
+</html>
