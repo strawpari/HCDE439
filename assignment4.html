@@ -1,0 +1,93 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <meta charset="utf-8"> 
+        <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
+
+        <title>Pari Gabriel's HCDE 439 Physical Computing Page!</title> 
+
+        <link href="style.css" media="screen" rel="stylesheet" type="text/css" />
+
+    </head> 
+    <body> 
+
+        <div class="header">
+            <h1>Pari Gabriel's Assignment 4!</h1>
+            <p>
+            Here is all the documentation for assignment 4.
+            </p>
+            <p>
+            <img src="a4-circuit.JPG" width=400></a>
+            </br>
+        	  Circuit
+            </p>
+            <p>
+            <img src="a4-schematic.png" width=400></a>
+            </br>
+        	  Schematic
+            </p>
+            <p>
+            <pre><code>
+            300 LEDs / (18W) = 78 LEDs / (xW)
+            x = 4.68W
+            </pre></code>
+            My 78 LEDs use use 4.68W of power.
+            </br>
+            <pre><code>
+            P = IV 
+            I = P/V
+            I = 4.68W / 12V
+            I = 0.39A
+            </pre></code>
+            78 LEDs draw 0.39A, which is under the 0.6A limit of the transistor.
+            </br>
+            <pre><code>
+            V = IR
+            I = V/R
+            I = 5V / 240 ohms
+            I = 0.020A or 20mA
+            </pre></code>
+            With a 5V power supply, you can expect to drop 3V across every white LED. At the end of each section of the LED strip, there is 3V of power left. On each of these sections, there is a 240 ohm resistor. Based off this informatoin, you can find the current running through each section of LEDs. With 20mA of current and 5V of power, I need at the very least a 240 ohm resistor to protect my circuit from blowing up. I used a 330 ohm resistor because I had issues with my LED brightness.
+            </br>
+            </p>  
+            <p>
+            <img src="a4-functionality.gif" width=400></a>
+            </br>
+        	  The circuit in action.
+            </br>
+            </p>
+           <p>
+            <pre><code>
+const int analogInPin = A0; // IN pin does not need to change
+const int ledPin = 9; // LED connected to digital pin 9
+
+int sensorValue = 0; // value read from the photoresistor
+int outputValue = 0; // value output to the PWM (analog out)
+
+//Setting up Arduino pins and serial monitor
+void setup() {
+  pinMode(analogInPin, INPUT);  // set analogInPin A0 as an input
+  Serial.begin(9600);  // initialize serial communications at 9600 bps
+}
+
+//This function will keep looping
+void loop() {
+  sensorValue = analogRead(analogInPin);  // set sensorValue as the value read by analogInPin
+  Serial.println(sensorValue);  // write the sensorValue on the serial monitor
+  outputValue = map(sensorValue, 830, 920, 0, 120); // map the outputValue from the sensorValue
+  analogWrite(ledPin, outputValue); //set the brightness of the ledPin as the outputValue
+
+  Serial.print("sensor = ");
+  Serial.print(sensorValue);
+  Serial.print("\t output = ");
+  Serial.println(outputValue);
+}
+            </pre></code>
+            <p>The code snippet.</p>
+            <br>
+            </p>
+
+        </div>
+        
+    </body>
+</html>
