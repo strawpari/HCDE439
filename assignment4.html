@@ -64,19 +64,18 @@ const int ledPin = 9; // LED connected to digital pin 9
 int sensorValue = 0; // value read from the photoresistor
 int outputValue = 0; // value output to the PWM (analog out)
 
-//Setting up Arduino pins and serial monitor
 void setup() {
   pinMode(analogInPin, INPUT);  // set analogInPin A0 as an input
   Serial.begin(9600);  // initialize serial communications at 9600 bps
 }
 
-//This function will keep looping
 void loop() {
   sensorValue = analogRead(analogInPin);  // set sensorValue as the value read by analogInPin
-  Serial.println(sensorValue);  // write the sensorValue on the serial monitor
+  Serial.println(sensorValue);  // display the sensorValue on the serial monitor
   outputValue = map(sensorValue, 830, 920, 0, 120); // map the outputValue from the sensorValue
-  analogWrite(ledPin, outputValue); //set the brightness of the ledPin as the outputValue
+  analogWrite(ledPin, outputValue); //set brightness of ledPin as the outputValue
 
+  // print the results to the serial monitor
   Serial.print("sensor = ");
   Serial.print(sensorValue);
   Serial.print("\t output = ");
