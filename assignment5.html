@@ -1,0 +1,117 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <meta charset="utf-8"> 
+        <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
+
+        <title>Pari Gabriel's HCDE 439 Physical Computing Page!</title> 
+
+        <link href="style.css" media="screen" rel="stylesheet" type="text/css" />
+
+    </head> 
+    <body> 
+
+        <div class="header">
+            <h1>Pari Gabriel's Assignment 5!</h1>
+            <p>
+            Here is all the documentation for assignment 5.
+            </p>
+            <p>
+            <img src="a5-circuit.JPG" width=400></a>
+            </br>
+        	  Circuit
+            </p>
+            <p>
+            <img src="a5-schematic.png" width=400></a>
+            </br>
+        	  Schematic
+            </p>
+            <p>
+            <pre><code>
+  #include <Servo.h>
+  Servo myServo;  // create a servo object
+  
+  int xPosition = 0;
+  int yPosition = 0;
+  int outputValue = 0;
+  const int xPin = A0;
+  const int yPin = A1;
+  const int powerPin = A4;
+  const int servoPower = A5;
+  const int servoControl = 9;
+  const int initialPosition = 90;
+
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(xPin, INPUT);
+  pinMode(yPin, INPUT);
+  pinMode(powerPin, OUTPUT);
+  digitalWrite(powerPin, HIGH);
+  pinMode(servoPower, OUTPUT);
+  digitalWrite(servoPower, HIGH);
+  myServo.attach(servoControl); // attaches the servo on pin 9 to the servo object
+  myServo.write(initialPosition);
+  Serial.begin(9600);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+
+  xPosition = analogRead(xPin);
+  myServo.write(xPosition/10);
+
+  Serial.print("X: "); 
+  Serial.println(xPosition);
+
+  delay(100);
+
+}
+            </pre></code>
+            I tested my servo motor with another student's code (that worked with that student's servo) and realized that there was something wrong with how it operates. Because of this, I ended up scrapping more my more complicated method of getting the motor to respond in favor of using something simple that just makes the motor work in a simple way. I divided the joystick output by 10 to translate it to a position for the servo. While this mapping isn't perfect, it at least moves the motor in some small way.
+            </br>
+            </p>
+            <p>
+            <img src="a5-serial.png" width=400></a>
+            </br>
+              The values output to the serial monitor from the joystick.
+            </p>  
+            <p>
+            <img src="a5-functionality.gif" width=400></a>
+            </br>
+        	  The circuit in action.
+            </br>
+            </p>
+           <p>
+            <pre><code>
+const int analogInPin = A0; // IN pin does not need to change
+const int ledPin = 9; // LED connected to digital pin 9
+
+int sensorValue = 0; // value read from the photoresistor
+int outputValue = 0; // value output to the PWM (analog out)
+
+void setup() {
+  pinMode(analogInPin, INPUT);  // set analogInPin A0 as an input
+  Serial.begin(9600);  // initialize serial communications at 9600 bps
+}
+
+void loop() {
+  sensorValue = analogRead(analogInPin);  // set sensorValue as the value read by analogInPin
+  Serial.println(sensorValue);  // display the sensorValue on the serial monitor
+  outputValue = map(sensorValue, 830, 920, 0, 120); // map the outputValue from the sensorValue
+  analogWrite(ledPin, outputValue); //set brightness of ledPin as the outputValue
+
+  // print the results to the serial monitor
+  Serial.print("sensor = ");
+  Serial.print(sensorValue);
+  Serial.print("\t output = ");
+  Serial.println(outputValue);
+}
+            </pre></code>
+            <p>The code snippet.</p>
+            <br>
+            </p>
+
+        </div>
+        
+    </body>
+</html>
