@@ -1,0 +1,167 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <meta charset="utf-8"> 
+        <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
+
+        <title>Pari Gabriel's HCDE 439 Physical Computing Page!</title> 
+
+        <link href="style.css" media="screen" rel="stylesheet" type="text/css" />
+
+    </head> 
+    <body> 
+
+        <div class="header">
+            <h1>Pari Gabriel's Assignment 6!</h1>
+            <p>
+            Here is all the documentation for assignment 6.
+            </p>
+
+            <p>
+            <img src="a6-circuit.JPG" width=400></a>
+            </br>
+        	  Circuit
+            </p>
+
+            <p>
+            <img src="a6-schematic.png" width=400></a>
+            </br>
+        	  Schematic
+            </p>
+
+            <p>
+            <pre><code>
+var serial; // variable to hold an instance of the serialport library
+var portName = '/dev/cu.usbmodem144101' //rename to the name of your port
+var datain; //some data coming in over serial!
+var xPos = 0;
+let img; // Declare variable 'img'.
+
+function setup() {
+  serial = new p5.SerialPort();       // make a new instance of the serialport library
+  serial.on('list', printList);       // set a callback function for the serialport list event
+  serial.on('connected', serverConnected); // callback for connecting to the server
+  serial.on('open', portOpen);        // callback for the port opening
+  serial.on('data', serialEvent);     // callback for when new data arrives
+  serial.on('error', serialError);    // callback for errors
+  serial.on('close', portClose);      // callback for the port closing
+ 
+  serial.list();                      // list the serial ports
+  serial.open(portName);              // open a serial port
+
+  //create a canvas to display images on
+  createCanvas(800, 530);
+  //load image from an online source because image files cannot be hosted locally with this code
+  img = loadImage('https://cdn.shopify.com/s/files/1/0901/8716/products/playing-cards-noc-deck-v3s-kingwide_2048x.png?v=1497136264'); // Load the image
+  //create solitaire-green colored background
+  background(0x00, 0x60, 0x00);
+}
+ 
+// get the list of ports:
+function printList(portList) {
+ // portList is an array of serial port names
+ for (var i = 0; i < portList.length; i++) {
+ // Display the list the console:
+   print(i + " " + portList[i]);
+ }
+}
+
+function serverConnected() {
+  print('connected to server.');
+}
+ 
+function portOpen() {
+  print('the serial port opened.')
+}
+ 
+function serialError(err) {
+  print('Something went wrong with the serial port. ' + err);
+}
+ 
+function portClose() {
+  print('The serial port closed.');
+}
+
+function serialEvent() {
+  if (serial.available()) {
+    datain = Number(serial.readLine());
+  } 
+}
+
+function graphData(newData, img) {
+
+  // map the range of the input to the window height:
+  var yPos = map(newData, 250, 700, 0, height);
+  
+  // Displays the image at point (xPos, yPos) at 1/6th size
+  image(img, xPos, yPos + 50, img.width / 6, img.height / 6);
+
+  // at the edge of the screen, go back to the beginning:
+  if (xPos >= width) {
+    xPos = 0;
+    // clear the screen by resetting the background:
+    background(0x00, 0x60, 0x00);
+  } else {
+    // increment the horizontal position for the next reading:
+    xPos++;
+  }
+}
+
+function draw() {
+  graphData(datain, img);  
+}
+            </pre></code>
+            </br>
+            </p>  
+
+            <p> 
+            <pre><code>
+  // map the range of the input to the window height:
+  var yPos = map(newData, 250, 700, 0, height);
+  
+  // Displays the image at point (xPos, yPos) at 1/6th size
+  image(img, xPos, yPos + 50, img.width / 6, img.height / 6);
+            </pre></code>
+            </br>
+              The values of my photoresistor came in between 250 and 700 on my serial monitor, so I mapped those values as the yPos for the card image. The image is set to be displayed at 1/6th of its original size because I could not use a local file that I would be able to resize outside of my code.
+            </p>
+            <p>
+            <img src="a6-functionality.gif" width=400></a>
+            </br>
+        	  The circuit in action.
+            </br>
+            </p>
+           <p>
+            <pre><code>
+const int analogInPin = A0; // IN pin does not need to change
+const int ledPin = 9; // LED connected to digital pin 9
+
+int sensorValue = 0; // value read from the photoresistor
+int outputValue = 0; // value output to the PWM (analog out)
+
+void setup() {
+  pinMode(analogInPin, INPUT);  // set analogInPin A0 as an input
+  Serial.begin(9600);  // initialize serial communications at 9600 bps
+}
+
+void loop() {
+  sensorValue = analogRead(analogInPin);  // set sensorValue as the value read by analogInPin
+  Serial.println(sensorValue);  // display the sensorValue on the serial monitor
+  outputValue = map(sensorValue, 830, 920, 0, 120); // map the outputValue from the sensorValue
+  analogWrite(ledPin, outputValue); //set brightness of ledPin as the outputValue
+
+  // print the results to the serial monitor
+  Serial.print("sensor = ");
+  Serial.print(sensorValue);
+  Serial.print("\t output = ");
+  Serial.println(outputValue);
+}
+            </pre></code>
+            <p>The code snippet.</p>
+            <br>
+            </p>
+
+        </div>
+        
+    </body>
+</html>
