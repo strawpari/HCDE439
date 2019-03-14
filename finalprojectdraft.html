@@ -112,7 +112,21 @@ void loop(){
             </p>
 
             <p>
-            <p>I used a 1k resistor for the left button and a 5k resistor for the right button. For some reason, the buttons would read out as almost equal in my serial monitor until I added a 100M ohm resistor before the ground connection. I found this solution in an Arduino forum, but they didn't explain exactly why it worked. Another way (easier) to do this would have been to just connect each button to different input pin.<br> <br>
+            <p>
+            Materials
+            <ul>
+                <li>DC Motor</li>
+                <li>Fan attachment</li>
+                <li>2x pushbutton</li>
+                <li>5x resistors (100, 330, 1k, 5k, 100K)</li>
+                <li>NPN transitor</li>
+                <li>Diode Rectifier</li>
+                <li>1 Digit 7-Segment display</li>
+            </ul>
+            <br>
+
+
+            I used a 1k resistor for the left button and a 5k resistor for the right button. For some reason, the buttons would read out as almost equal in my serial monitor until I added a 100K resistor before the ground connection. I found this solution in an Arduino forum, but they didn't explain exactly why it worked. Another way (easier) to do this would have been to just connect each button to different input pin.<br> <br>
 
             An NPN transistor and flyback diode were used with the DC motor to provide enough current to the motor and keep current from spiking and messing with the motor.
             <br> <br>
