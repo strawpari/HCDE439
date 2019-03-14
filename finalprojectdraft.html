@@ -112,10 +112,10 @@ void loop(){
             </p>
 
             <p>
-            <p>I used a 1k resistor for the left button and a 5k resistor for the right button. For some reason, the buttons would read out as almost equal in my serial monitor until I added a 100M ohm resistor before the ground connection. I found this solution in an Arduino forum, but they didn't explain exactly why it worked. Another way (easier) to do this would have been to just connect each button to different input pin.<br>
+            <p>I used a 1k resistor for the left button and a 5k resistor for the right button. For some reason, the buttons would read out as almost equal in my serial monitor until I added a 100M ohm resistor before the ground connection. I found this solution in an Arduino forum, but they didn't explain exactly why it worked. Another way (easier) to do this would have been to just connect each button to different input pin.<br> <br>
 
             An NPN transistor and flyback diode were used with the DC motor to provide enough current to the motor and keep current from spiking and messing with the motor.
-            <br>
+            <br> <br>
 
             A single 330 ohm resistor was used for the 7 segment display instead of 7 separate resistors to save space on the breadboard. This ended up almost imperceptably reducing the brightness when all the segments were turned on (8) versus when just two segments were turned on (1).
 
